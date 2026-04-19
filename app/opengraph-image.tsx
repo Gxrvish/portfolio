@@ -57,7 +57,7 @@ export default function OpenGraphImage() {
                     fontWeight: 700,
                 }}
             >
-                Software Engineer Portfolio
+                Garvish Panchal
             </p>
 
             <h1

@@ -12,7 +12,7 @@ import { siteConfig } from "@/config/site";
 import { resumeData } from "@/data/resume";
 
 export const metadata: Metadata = {
-    title: "Software Engineer Resume",
+    title: "Garvish Panchal",
     description: resumeData.seo.description,
     keywords: resumeData.seo.keywords,
     alternates: {

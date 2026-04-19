@@ -30,16 +30,38 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                             ))}
                         </ul>
 
-                        {project.liveUrl ? (
-                            <a
-                                className="project-link"
-                                href={project.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Live project:{" "}
-                                {project.liveUrl.replace("https://", "")}
-                            </a>
+                        {project.liveUrl || project.repoUrl ? (
+                            <div className="project-links">
+                                {project.liveUrl ? (
+                                    <a
+                                        className="project-link"
+                                        href={project.liveUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Live project:{" "}
+                                        {project.liveUrl.replace(
+                                            "https://",
+                                            ""
+                                        )}
+                                    </a>
+                                ) : null}
+
+                                {project.repoUrl ? (
+                                    <a
+                                        className="project-link"
+                                        href={project.repoUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Source:{" "}
+                                        {project.repoUrl.replace(
+                                            "https://",
+                                            ""
+                                        )}
+                                    </a>
+                                ) : null}
+                            </div>
                         ) : null}
                     </article>
                 ))}

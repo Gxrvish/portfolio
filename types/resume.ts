@@ -30,6 +30,7 @@ export type ResumeProject = {
     tech: string[];
     highlights: string[];
     liveUrl?: string;
+    repoUrl?: string;
 };
 
 export type ResumeAchievement = {

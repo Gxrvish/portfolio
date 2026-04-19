@@ -1,3 +1,4 @@
+import { ThemeToggle } from "@/components/resume/ThemeToggle";
 import type { NavItem, ResumeProfile } from "@/types/resume";
 
 type HeaderSectionProps = {
@@ -10,7 +11,10 @@ const getPhoneHref = (phone: string) => `tel:${phone.replace(/\s+/g, "")}`;
 export function HeaderSection({ profile, navItems }: HeaderSectionProps) {
     return (
         <header className="hero-card" aria-labelledby="profile-name">
-            <p className="title-eyebrow">{profile.role}</p>
+            <div className="hero-top-row">
+                <p className="title-eyebrow">{profile.role}</p>
+                <ThemeToggle />
+            </div>
             <h1 id="profile-name" className="hero-title">
                 {profile.name}
             </h1>
