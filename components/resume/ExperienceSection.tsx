@@ -7,7 +7,11 @@ type ExperienceSectionProps = {
 
 export function ExperienceSection({ experiences }: ExperienceSectionProps) {
     return (
-        <Section id="experience" title="Experience">
+        <Section
+            id="experience"
+            title="Experience"
+            command="git log --oneline experience"
+        >
             <div className="stack-list">
                 {experiences.map((experience) => (
                     <article

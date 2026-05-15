@@ -7,7 +7,7 @@ type EducationSectionProps = {
 
 export function EducationSection({ education }: EducationSectionProps) {
     return (
-        <Section id="education" title="Education">
+        <Section id="education" title="Education" command="cat education.txt">
             <div className="stack-list">
                 {education.map((item) => (
                     <article key={item.degree} className="entry-card">

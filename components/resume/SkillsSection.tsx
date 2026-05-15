@@ -7,7 +7,7 @@ type SkillsSectionProps = {
 
 export function SkillsSection({ skills }: SkillsSectionProps) {
     return (
-        <Section id="skills" title="Skills">
+        <Section id="skills" title="Skills" command="ls -la skills/">
             <div className="skill-grid">
                 {skills.map((group) => (
                     <article key={group.title} className="skill-card">

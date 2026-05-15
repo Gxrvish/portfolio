@@ -9,7 +9,11 @@ export function CodingProfilesSection({
     profiles,
 }: CodingProfilesSectionProps) {
     return (
-        <Section id="coding-profiles" title="Coding Profiles">
+        <Section
+            id="coding-profiles"
+            title="Coding Profiles"
+            command="git remote -v"
+        >
             <div className="profile-grid">
                 {profiles.map((profile) => (
                     <a

@@ -1,9 +1,10 @@
 import "./globals.css";
 
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { JetBrains_Mono, Manrope } from "next/font/google";
 import Script from "next/script";
 
+import { BootScreen } from "@/components/resume/BootScreen";
 import { ThemeProvider } from "@/components/resume/ThemeProvider";
 import { siteConfig } from "@/config/site";
 
@@ -13,8 +14,8 @@ const bodyFont = Manrope({
     display: "swap",
 });
 
-const headingFont = Fraunces({
-    variable: "--font-heading",
+const monoFont = JetBrains_Mono({
+    variable: "--font-mono",
     subsets: ["latin"],
     display: "swap",
 });
@@ -138,7 +139,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
     width: "device-width",
     initialScale: 1,
-    themeColor: "#0f766e",
+    themeColor: [
+        { media: "(prefers-color-scheme: dark)", color: "#060a0f" },
+        { media: "(prefers-color-scheme: light)", color: "#eef2ec" },
+    ],
 };
 
 export default function RootLayout({
@@ -150,7 +154,7 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning
-            className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}
+            className={`${bodyFont.variable} ${monoFont.variable} h-full antialiased`}
         >
             <body className="min-h-full flex flex-col">
                 <Script id="theme-init" strategy="beforeInteractive">
@@ -159,6 +163,7 @@ export default function RootLayout({
                 <Script id="scroll-init" strategy="beforeInteractive">
                     {scrollInitScript}
                 </Script>
+                <BootScreen />
                 <ThemeProvider>{children}</ThemeProvider>
             </body>
         </html>

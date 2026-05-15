@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+import { resumeData } from "@/data/resume";
+
 export const size = {
     width: 1200,
     height: 630,
@@ -15,73 +17,140 @@ export default function OpenGraphImage() {
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
-                padding: "64px",
-                background:
-                    "linear-gradient(140deg, #f9fbf5 0%, #f4fffb 58%, #eaf6f7 100%)",
-                color: "#17242f",
-                fontFamily: "ui-sans-serif, system-ui, sans-serif",
+                padding: "56px",
+                background: "#060a0f",
+                color: "#c7d4df",
+                fontFamily: "monospace",
                 position: "relative",
             }}
         >
             <div
                 style={{
                     position: "absolute",
-                    top: "-80px",
-                    right: "-90px",
-                    width: "380px",
-                    height: "380px",
+                    top: "-120px",
+                    right: "-100px",
+                    width: "440px",
+                    height: "440px",
                     borderRadius: "9999px",
-                    background: "rgba(15, 118, 110, 0.14)",
+                    background: "rgba(82, 240, 165, 0.16)",
                 }}
             />
             <div
                 style={{
                     position: "absolute",
-                    bottom: "-140px",
-                    left: "-90px",
-                    width: "430px",
-                    height: "430px",
+                    bottom: "-160px",
+                    left: "-110px",
+                    width: "480px",
+                    height: "480px",
                     borderRadius: "9999px",
-                    background: "rgba(245, 158, 11, 0.12)",
+                    background: "rgba(56, 217, 240, 0.12)",
                 }}
             />
+
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    color: "#7c8c9b",
+                    fontSize: 24,
+                }}
+            >
+                <div
+                    style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: 9999,
+                        background: "#f87171",
+                    }}
+                />
+                <div
+                    style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: 9999,
+                        background: "#f9c552",
+                    }}
+                />
+                <div
+                    style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: 9999,
+                        background: "#52f0a5",
+                    }}
+                />
+                <span style={{ marginLeft: 16 }}>
+                    visitor@garvish: ~/portfolio
+                </span>
+            </div>
+
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    flex: 1,
+                }}
+            >
+                <p
+                    style={{
+                        margin: 0,
+                        fontSize: 30,
+                        color: "#7c8c9b",
+                    }}
+                >
+                    <span style={{ color: "#52f0a5" }}>visitor@garvish</span>:
+                    <span style={{ color: "#7c8c9b" }}>~</span>${" "}
+                    <span style={{ color: "#c7d4df" }}>whoami</span>
+                </p>
+
+                <h1
+                    style={{
+                        margin: "14px 0 0",
+                        fontSize: 88,
+                        lineHeight: 1,
+                        fontWeight: 800,
+                        color: "#52f0a5",
+                    }}
+                >
+                    {resumeData.profile.name}
+                </h1>
+
+                <p
+                    style={{
+                        margin: "20px 0 0",
+                        fontSize: 34,
+                        color: "#38d9f0",
+                        letterSpacing: 2,
+                        textTransform: "uppercase",
+                    }}
+                >
+                    {resumeData.profile.role}
+                </p>
+
+                <p
+                    style={{
+                        margin: "26px 0 0",
+                        maxWidth: "90%",
+                        fontSize: 28,
+                        lineHeight: 1.4,
+                        color: "#9aa7b4",
+                    }}
+                >
+                    {resumeData.profile.tagline}
+                </p>
+            </div>
 
             <p
                 style={{
                     margin: 0,
-                    fontSize: 28,
-                    letterSpacing: 1,
-                    textTransform: "uppercase",
-                    color: "#115e59",
-                    fontWeight: 700,
+                    fontSize: 24,
+                    color: "#7c8c9b",
                 }}
             >
-                Garvish Panchal
-            </p>
-
-            <h1
-                style={{
-                    margin: "18px 0 0",
-                    fontSize: 82,
-                    lineHeight: 1,
-                    fontWeight: 800,
-                }}
-            >
-                Garvish Panchal
-            </h1>
-
-            <p
-                style={{
-                    margin: "22px 0 0",
-                    maxWidth: "88%",
-                    fontSize: 34,
-                    lineHeight: 1.3,
-                    color: "#2f3f4a",
-                }}
-            >
-                Scalable web systems, performance optimization, and clean
-                architecture.
+                <span style={{ color: "#52f0a5" }}>❯</span>{" "}
+                {resumeData.websiteUrl.replace("https://", "")}
             </p>
         </div>,
         size

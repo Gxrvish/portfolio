@@ -7,7 +7,7 @@ type ProjectsSectionProps = {
 
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
     return (
-        <Section id="projects" title="Projects">
+        <Section id="projects" title="Projects" command="ls projects/ --tree">
             <div className="stack-list">
                 {projects.map((project) => (
                     <article key={project.title} className="entry-card">

@@ -44,6 +44,10 @@ const skillKeywords = Array.from(
     new Set(resumeData.skills.flatMap((group) => group.values))
 );
 
+const [addressRegion, addressCountry] = resumeData.profile.location
+    .split(",")
+    .map((part) => part.trim());
+
 const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -60,14 +64,33 @@ const structuredData = {
                 resumeData.profile.linkedin.href,
                 ...resumeData.codingProfiles.map((profile) => profile.href),
             ],
+            address: {
+                "@type": "PostalAddress",
+                addressRegion,
+                addressCountry,
+            },
             worksFor: {
                 "@type": "Organization",
-                name: "Odoo",
+                name: resumeData.experiences[0]?.company ?? "Odoo",
+            },
+            hasOccupation: {
+                "@type": "Occupation",
+                name: resumeData.profile.role,
+                skills: skillKeywords.join(", "),
             },
             alumniOf: {
                 "@type": "CollegeOrUniversity",
                 name: resumeData.education[0]?.institution,
             },
+            hasCredential: resumeData.education.map((item) => ({
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "degree",
+                name: item.degree,
+                recognizedBy: {
+                    "@type": "CollegeOrUniversity",
+                    name: item.institution,
+                },
+            })),
             knowsAbout: skillKeywords,
         },
         {
@@ -86,12 +109,42 @@ const structuredData = {
             "@id": `${resumeData.websiteUrl}#profile-page`,
             url: resumeData.websiteUrl,
             name: resumeData.seo.title,
+            description: resumeData.seo.description,
+            inLanguage: "en-IN",
             isPartOf: {
                 "@id": `${resumeData.websiteUrl}#website`,
             },
             about: {
                 "@id": `${resumeData.websiteUrl}#person`,
             },
+            mainEntity: {
+                "@id": `${resumeData.websiteUrl}#person`,
+            },
+            primaryImageOfPage: {
+                "@type": "ImageObject",
+                url: `${resumeData.websiteUrl}/opengraph-image`,
+            },
+            breadcrumb: {
+                "@id": `${resumeData.websiteUrl}#breadcrumb`,
+            },
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": `${resumeData.websiteUrl}#breadcrumb`,
+            itemListElement: [
+                {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: resumeData.websiteUrl,
+                },
+                ...resumeData.navigation.map((nav, index) => ({
+                    "@type": "ListItem",
+                    position: index + 2,
+                    name: nav.label,
+                    item: `${resumeData.websiteUrl}/#${nav.id}`,
+                })),
+            ],
         },
     ],
 };
@@ -105,6 +158,9 @@ export default function Home() {
                     __html: JSON.stringify(structuredData),
                 }}
             />
+            <a className="skip-link" href="#content">
+                Skip to content
+            </a>
             <div className="page-shell">
                 <HeaderSection
                     profile={resumeData.profile}
