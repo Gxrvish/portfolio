@@ -9,12 +9,8 @@ export function CodingProfilesSection({
     profiles,
 }: CodingProfilesSectionProps) {
     return (
-        <Section
-            id="coding-profiles"
-            title="Coding Profiles"
-            command="git remote -v"
-        >
-            <div className="profile-grid">
+        <Section id="coding-profiles" title="Coding Profiles">
+            <div className="profiles">
                 {profiles.map((profile) => (
                     <a
                         key={profile.label}
@@ -23,8 +19,7 @@ export function CodingProfilesSection({
                         rel="noopener noreferrer"
                         className="profile-link"
                     >
-                        <span className="profile-label">{profile.label}</span>
-                        <span className="profile-url">{profile.display}</span>
+                        {profile.label}
                     </a>
                 ))}
             </div>

@@ -9,12 +9,8 @@ export function AchievementsSection({
     achievements,
 }: AchievementsSectionProps) {
     return (
-        <Section
-            id="achievements"
-            title="Achievements"
-            command="cat achievements.log"
-        >
-            <ul className="bullet-list">
+        <Section id="achievements" title="Achievements">
+            <ul className="bullets">
                 {achievements.map((achievement) => (
                     <li key={achievement.text}>
                         {achievement.text}

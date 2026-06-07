@@ -6,8 +6,8 @@ type SummarySectionProps = {
 
 export function SummarySection({ summary }: SummarySectionProps) {
     return (
-        <Section id="summary" title="Summary" command="cat summary.md">
-            <p className="summary-text">{summary}</p>
+        <Section id="summary" title="About">
+            <p className="prose-text">{summary}</p>
         </Section>
     );
 }

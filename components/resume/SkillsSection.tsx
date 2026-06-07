@@ -7,12 +7,12 @@ type SkillsSectionProps = {
 
 export function SkillsSection({ skills }: SkillsSectionProps) {
     return (
-        <Section id="skills" title="Skills" command="ls -la skills/">
-            <div className="skill-grid">
+        <Section id="skills" title="Skills">
+            <div className="skill-list">
                 {skills.map((group) => (
-                    <article key={group.title} className="skill-card">
-                        <h3 className="skill-title">{group.title}</h3>
-                        <ul className="chip-list" aria-label={group.title}>
+                    <div key={group.title} className="skill-row">
+                        <span className="skill-label">{group.title}</span>
+                        <ul className="skill-values" aria-label={group.title}>
                             {group.values.map((skill) => (
                                 <li
                                     key={`${group.title}-${skill}`}
@@ -22,7 +22,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                                 </li>
                             ))}
                         </ul>
-                    </article>
+                    </div>
                 ))}
             </div>
         </Section>

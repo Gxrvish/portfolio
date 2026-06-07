@@ -7,34 +7,27 @@ type ExperienceSectionProps = {
 
 export function ExperienceSection({ experiences }: ExperienceSectionProps) {
     return (
-        <Section
-            id="experience"
-            title="Experience"
-            command="git log --oneline experience"
-        >
-            <div className="stack-list">
+        <Section id="experience" title="Experience">
+            <div className="entries">
                 {experiences.map((experience) => (
-                    <article
-                        key={`${experience.company}-${experience.role}`}
-                        className="entry-card"
-                    >
-                        <header className="entry-head">
+                    <article key={`${experience.company}-${experience.role}`}>
+                        <div className="entry-head">
                             <h3 className="entry-title">
                                 {experience.role}
-                                <span className="entry-company">
+                                <span className="entry-sub">
                                     {" "}
-                                    @ {experience.company}
+                                    · {experience.company}
                                 </span>
                             </h3>
                             <p className="entry-period">{experience.period}</p>
-                        </header>
+                        </div>
 
                         <p className="entry-meta">
-                            {experience.location} |{" "}
+                            {experience.location} ·{" "}
                             {experience.stack.join(", ")}
                         </p>
 
-                        <ul className="bullet-list">
+                        <ul className="bullets">
                             {experience.highlights.map((highlight) => (
                                 <li key={highlight}>{highlight}</li>
                             ))}

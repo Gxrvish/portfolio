@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { HomeWriting } from "@/components/HomeWriting";
 import { AchievementsSection } from "@/components/resume/AchievementsSection";
 import { CodingProfilesSection } from "@/components/resume/CodingProfilesSection";
 import { EducationSection } from "@/components/resume/EducationSection";
@@ -10,6 +11,7 @@ import { SkillsSection } from "@/components/resume/SkillsSection";
 import { SummarySection } from "@/components/resume/SummarySection";
 import { siteConfig } from "@/config/site";
 import { resumeData } from "@/data/resume";
+import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
     title: "Garvish Panchal",
@@ -62,6 +64,8 @@ const structuredData = {
             telephone: resumeData.profile.phone,
             sameAs: [
                 resumeData.profile.linkedin.href,
+                siteConfig.socials.github,
+                siteConfig.socials.x,
                 ...resumeData.codingProfiles.map((profile) => profile.href),
             ],
             address: {
@@ -103,6 +107,20 @@ const structuredData = {
             author: {
                 "@id": `${resumeData.websiteUrl}#person`,
             },
+            hasPart: {
+                "@id": `${resumeData.websiteUrl}#blog`,
+            },
+        },
+        {
+            "@type": "Blog",
+            "@id": `${resumeData.websiteUrl}#blog`,
+            url: `${resumeData.websiteUrl}/blog`,
+            name: `${resumeData.profile.name} — Blog`,
+            description:
+                "Notes on software engineering, web performance, and system design.",
+            author: {
+                "@id": `${resumeData.websiteUrl}#person`,
+            },
         },
         {
             "@type": "ProfilePage",
@@ -124,32 +142,13 @@ const structuredData = {
                 "@type": "ImageObject",
                 url: `${resumeData.websiteUrl}/opengraph-image`,
             },
-            breadcrumb: {
-                "@id": `${resumeData.websiteUrl}#breadcrumb`,
-            },
-        },
-        {
-            "@type": "BreadcrumbList",
-            "@id": `${resumeData.websiteUrl}#breadcrumb`,
-            itemListElement: [
-                {
-                    "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: resumeData.websiteUrl,
-                },
-                ...resumeData.navigation.map((nav, index) => ({
-                    "@type": "ListItem",
-                    position: index + 2,
-                    name: nav.label,
-                    item: `${resumeData.websiteUrl}/#${nav.id}`,
-                })),
-            ],
         },
     ],
 };
 
 export default function Home() {
+    const recentPosts = getAllPosts().slice(0, 3);
+
     return (
         <>
             <script
@@ -161,25 +160,17 @@ export default function Home() {
             <a className="skip-link" href="#content">
                 Skip to content
             </a>
-            <div className="page-shell">
-                <HeaderSection
-                    profile={resumeData.profile}
-                    navItems={resumeData.navigation}
-                />
-                <main id="content" className="resume-main">
-                    <SummarySection summary={resumeData.summary} />
-                    <SkillsSection skills={resumeData.skills} />
-                    <ExperienceSection experiences={resumeData.experiences} />
-                    <ProjectsSection projects={resumeData.projects} />
-                    <AchievementsSection
-                        achievements={resumeData.achievements}
-                    />
-                    <CodingProfilesSection
-                        profiles={resumeData.codingProfiles}
-                    />
-                    <EducationSection education={resumeData.education} />
-                </main>
-            </div>
+            <main id="content" className="container page">
+                <HeaderSection profile={resumeData.profile} />
+                <SummarySection summary={resumeData.summary} />
+                <SkillsSection skills={resumeData.skills} />
+                <ExperienceSection experiences={resumeData.experiences} />
+                <ProjectsSection projects={resumeData.projects} />
+                <HomeWriting posts={recentPosts} />
+                <AchievementsSection achievements={resumeData.achievements} />
+                <CodingProfilesSection profiles={resumeData.codingProfiles} />
+                <EducationSection education={resumeData.education} />
+            </main>
         </>
     );
 }
