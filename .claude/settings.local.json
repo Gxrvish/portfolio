@@ -2,7 +2,18 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(npx next *)"
+      "Bash(npx next *)",
+      "Bash(curl -s \"https://github-contributions-api.jogruber.de/v4/Gxrvish?y=last\")",
+      "Bash(npx eslint *)",
+      "Read(//tmp/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(google-chrome --headless=new --disable-gpu --hide-scrollbars --window-size=1200,5000 --force-device-scale-factor=1 --virtual-time-budget=8000 --screenshot=/tmp/heat_d.png \"http://localhost:4189/\")",
+      "Bash(lsof -ti:4189)",
+      "Bash(xargs -r kill -9)",
+      "Bash(lsof -ti:3000)",
+      "Bash(ps *)",
+      "Bash(google-chrome --headless=new --disable-gpu --hide-scrollbars --window-size=820,5200 --force-device-scale-factor=1 --virtual-time-budget=10000 --screenshot=/tmp/dev_heat.png \"http://localhost:3000/\")",
+      "Bash(google-chrome --headless=new --disable-gpu --hide-scrollbars --window-size=820,6500 --force-device-scale-factor=1 --virtual-time-budget=10000 --screenshot=/tmp/dev_heat.png \"http://localhost:3000/\")"
     ]
   }
 }

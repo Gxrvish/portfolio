@@ -685,6 +685,66 @@ h3 {
 }
 
 /* ============================================================
+   GitHub heatmap
+   ============================================================ */
+/* Fluid grid: all 53 weeks always fit the container, no scrollbar. */
+.heatmap {
+    display: flex;
+    gap: clamp(1px, 0.3vw, 3px);
+    width: 100%;
+}
+
+.heatmap-week {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1px, 0.3vw, 3px);
+}
+
+.heatmap-day {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    background: var(--code-bg);
+}
+
+.heatmap-day.is-empty {
+    background: transparent;
+}
+
+.heatmap-day[data-level="1"] {
+    background: color-mix(in srgb, var(--accent) 30%, var(--code-bg));
+}
+
+.heatmap-day[data-level="2"] {
+    background: color-mix(in srgb, var(--accent) 55%, var(--code-bg));
+}
+
+.heatmap-day[data-level="3"] {
+    background: color-mix(in srgb, var(--accent) 80%, var(--code-bg));
+}
+
+.heatmap-day[data-level="4"] {
+    background: var(--accent);
+}
+
+.heatmap-meta {
+    margin: 0.75rem 0 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.heatmap-meta a {
+    color: var(--accent);
+}
+
+.heatmap-meta a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ============================================================
    Footer
    ============================================================ */
 .site-footer {

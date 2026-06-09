@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { GithubHeatmap } from "@/components/GithubHeatmap";
 import { HomeWriting } from "@/components/HomeWriting";
 import { AchievementsSection } from "@/components/resume/AchievementsSection";
 import { CodingProfilesSection } from "@/components/resume/CodingProfilesSection";
@@ -170,6 +171,7 @@ export default function Home() {
                 <AchievementsSection achievements={resumeData.achievements} />
                 <CodingProfilesSection profiles={resumeData.codingProfiles} />
                 <EducationSection education={resumeData.education} />
+                <GithubHeatmap />
             </main>
         </>
     );
