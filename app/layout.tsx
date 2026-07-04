@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     alternates: {
         canonical: "/",
+        types: {
+            "application/rss+xml": [
+                { url: "/rss.xml", title: `${siteConfig.name} — Blog` },
+            ],
+        },
     },
     keywords: [
         "Garvish Panchal",
