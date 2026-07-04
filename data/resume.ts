@@ -190,9 +190,9 @@ export const resumeData: ResumeData = {
         },
     ],
     seo: {
-        title: "Garvish Panchal Resume Portfolio",
+        title: "Garvish Panchal — Software Engineer",
         description:
-            "Garvish Panchal is a software engineer specializing in scalable web systems, optimization, and clean architecture. Explore experience at Odoo, projects, achievements, and coding profiles.",
+            "Garvish Panchal is a software engineer specializing in scalable web systems, optimization, and clean architecture. Experience at Odoo, projects, and blog.",
         keywords: [
             "Garvish Panchal",
             "Software Engineer",

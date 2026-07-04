@@ -15,7 +15,7 @@ import { resumeData } from "@/data/resume";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-    title: "Garvish Panchal",
+    title: "Garvish Panchal — Software Engineer",
     description: resumeData.seo.description,
     keywords: resumeData.seo.keywords,
     alternates: {

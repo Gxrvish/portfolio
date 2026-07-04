@@ -3,7 +3,7 @@ export const siteConfig = {
     role: "Software Engineer",
     title: "Garvish Panchal | Software Engineer Portfolio",
     description:
-        "Software Engineer focused on scalable web systems, performance optimization, and clean architecture. Explore experience, projects, coding profiles, and achievements.",
+        "Software Engineer focused on scalable web systems, performance optimization, and clean architecture. Explore experience, projects, and writing.",
     url: "https://garvish.tech",
     locale: "en_IN",
     socials: {

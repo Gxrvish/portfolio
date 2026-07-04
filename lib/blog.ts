@@ -134,7 +134,7 @@ function readingTime(content: string): number {
     return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
 }
 
-const ignoreList = ["preact-internals.md"];
+const ignoreList: string[] = [];
 
 function postFiles(): string[] {
     if (!fs.existsSync(POSTS_DIR)) {
