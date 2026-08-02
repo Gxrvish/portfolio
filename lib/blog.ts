@@ -148,7 +148,21 @@ function readingTime(content: string): number {
     return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
 }
 
-const ignoreList: string[] = [];
+const ignoreList: string[] = [
+    "owl-3-blockdom.md",
+    "owl-3-components-hooks.md",
+    "owl-3-contributing.md",
+    "owl-3-error-handling.md",
+    "owl-3-events-directives.md",
+    "owl-3-internals.md",
+    "owl-3-performance.md",
+    "owl-3-plugins-di.md",
+    "owl-3-reactivity.md",
+    "owl-3-scheduler-fibers.md",
+    "owl-3-template-compiler.md",
+    "owl-vs-react-vue-solid-svelte.md",
+    "owl-3-architecture.md",
+];
 
 function postFiles(): string[] {
     if (!fs.existsSync(POSTS_DIR)) {
