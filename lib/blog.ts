@@ -21,24 +21,33 @@ function extractMeta(
     if (match) {
         const [, block, body] = match;
         const fm = parseBlock(block);
+        const date = fm.date || fileDate(filePath);
 
         return {
             data: {
                 title: fm.title || deriveTitle(body) || "Untitled",
-                date: fm.date || fileDate(filePath),
+                date,
+                updated: fm.updated || date,
                 summary: fm.summary || deriveSummary(body),
                 tags: fm.tags,
+                series: fm.series,
+                order: fm.order,
             },
             content: stripLeadingH1(body.trim()),
         };
     }
 
+    const date = fileDate(filePath);
+
     return {
         data: {
             title: deriveTitle(raw) || "Untitled",
-            date: fileDate(filePath),
+            date,
+            updated: date,
             summary: deriveSummary(raw),
             tags: [],
+            series: "",
+            order: 0,
         },
         content: stripLeadingH1(raw.trim()),
     };
@@ -71,11 +80,16 @@ function parseBlock(block: string): BlogFrontmatter {
         }
     }
 
+    const order = Number.parseInt(asString(data.order), 10);
+
     return {
         title: asString(data.title),
         date: asString(data.date),
+        updated: asString(data.updated),
         summary: asString(data.summary),
         tags: Array.isArray(data.tags) ? data.tags : [],
+        series: asString(data.series),
+        order: Number.isNaN(order) ? 0 : order,
     };
 }
 
@@ -188,4 +202,18 @@ export function getPostBySlug(slug: string): BlogPost | null {
 
 export function getAllSlugs(): string[] {
     return postFiles().map((file) => file.replace(/\.md$/, ""));
+}
+
+/**
+ * All posts of a series in reading order (hub first, then parts ascending).
+ * Returns an empty list for a standalone post.
+ */
+export function getSeries(series: string): BlogPostMeta[] {
+    if (!series) {
+        return [];
+    }
+
+    return getAllPosts()
+        .filter((post) => post.series === series)
+        .sort((a, b) => a.order - b.order);
 }

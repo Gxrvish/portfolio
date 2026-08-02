@@ -8,9 +8,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
         url: `${siteConfig.url}/blog/${post.slug}`,
-        lastModified: new Date(`${post.date}T00:00:00`),
+        lastModified: new Date(`${post.updated}T00:00:00`),
         changeFrequency: "yearly",
-        priority: 0.6,
+        // A series hub links out to every part, so it earns a higher weight
+        // than a leaf post.
+        priority: post.series && post.order === 0 ? 0.7 : 0.6,
     }));
 
     return [

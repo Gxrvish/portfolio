@@ -9,7 +9,12 @@ export function Markdown({ content }: { content: string }) {
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeSlug]}
                 components={{
-                    code: ({ className, children, ...props }) => {
+                    // `node` is react-markdown's hast node. It must be pulled
+                    // out of every override, or React serializes it onto the
+                    // element as node="[object Object]" — a few hundred bytes
+                    // of junk markup on a long post.
+                    code: ({ node, className, children, ...props }) => {
+                        void node;
                         const text = String(children);
                         const isBlock = text.includes("\n");
                         const isDiagram =
@@ -23,12 +28,16 @@ export function Markdown({ content }: { content: string }) {
                             </code>
                         );
                     },
-                    table: ({ children, ...props }) => (
-                        <div className="table-wrap">
-                            <table {...props}>{children}</table>
-                        </div>
-                    ),
-                    a: ({ href, children, ...props }) => {
+                    table: ({ node, children, ...props }) => {
+                        void node;
+                        return (
+                            <div className="table-wrap">
+                                <table {...props}>{children}</table>
+                            </div>
+                        );
+                    },
+                    a: ({ node, href, children, ...props }) => {
+                        void node;
                         const external = href?.startsWith("http");
                         return (
                             <a

@@ -1,3 +1,10 @@
+---
+title: "Preact From The Inside Out"
+date: "2026-06-07"
+summary: "A ground-up explanation of how Preact 11 actually works: the virtual DOM, the single-pass diff, the microtask scheduler, hooks, context, refs, error boundaries, Suspense, and the React-compatibility layer."
+tags: [preact, framework-internals, virtual-dom, javascript]
+---
+
 # Preact From The Inside Out
 
 > I went down the Preact rabbit hole and came back with this - a complete, ground-up

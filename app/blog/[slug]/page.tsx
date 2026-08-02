@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Markdown } from "@/components/Markdown";
 import { siteConfig } from "@/config/site";
-import { getAllSlugs, getPostBySlug } from "@/lib/blog";
+import { getAllSlugs, getPostBySlug, getSeries } from "@/lib/blog";
 import { formatDate } from "@/lib/format";
 
 type PageProps = {
@@ -40,6 +40,7 @@ export async function generateMetadata({
             url,
             type: "article",
             publishedTime: post.date,
+            modifiedTime: post.updated,
             authors: [siteConfig.name],
             tags: post.tags,
         },
@@ -61,6 +62,13 @@ export default async function BlogPostPage({ params }: PageProps) {
 
     const url = `${siteConfig.url}/blog/${post.slug}`;
 
+    // Sibling posts, so a series reads as one work to both crawlers and humans.
+    const series = getSeries(post.series);
+    const seriesIndex = series.findIndex((entry) => entry.slug === post.slug);
+    const hub = series[0];
+    const previous = seriesIndex > 0 ? series[seriesIndex - 1] : null;
+    const next = seriesIndex >= 0 ? (series[seriesIndex + 1] ?? null) : null;
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
@@ -68,7 +76,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         headline: post.title,
         description: post.summary,
         datePublished: post.date,
-        dateModified: post.date,
+        dateModified: post.updated,
         keywords: post.tags.join(", "),
         wordCount: post.content.trim().split(/\s+/).filter(Boolean).length,
         inLanguage: "en-IN",
@@ -81,12 +89,43 @@ export default async function BlogPostPage({ params }: PageProps) {
             "@type": "Person",
             name: siteConfig.name,
             url: siteConfig.url,
+            sameAs: Object.values(siteConfig.socials),
         },
         publisher: {
             "@type": "Person",
             name: siteConfig.name,
             url: siteConfig.url,
         },
+        ...(post.series && hub
+            ? {
+                  isPartOf: {
+                      "@type": "CreativeWorkSeries",
+                      name: post.series,
+                      url: `${siteConfig.url}/blog/${hub.slug}`,
+                  },
+                  position: post.order,
+              }
+            : {}),
+    };
+
+    const breadcrumbs = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: siteConfig.url,
+            },
+            {
+                "@type": "ListItem",
+                position: 2,
+                name: "Blog",
+                item: `${siteConfig.url}/blog`,
+            },
+            { "@type": "ListItem", position: 3, name: post.title, item: url },
+        ],
     };
 
     return (
@@ -95,6 +134,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify(structuredData),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(breadcrumbs),
                 }}
             />
             <a className="skip-link" href="#content">
@@ -110,12 +155,34 @@ export default async function BlogPostPage({ params }: PageProps) {
                         <span className="article-meta">
                             {formatDate(post.date)} · {post.readingTime} min
                             read
+                            {post.series && seriesIndex > 0
+                                ? ` · Part ${post.order} of ${series.length - 1}`
+                                : null}
                         </span>
                         <h1 className="article-title">{post.title}</h1>
                     </header>
 
                     <Markdown content={post.content} />
                 </article>
+
+                {previous || next ? (
+                    <nav className="series-nav" aria-label="Series navigation">
+                        {previous ? (
+                            <Link href={`/blog/${previous.slug}`} rel="prev">
+                                ← {previous.title}
+                            </Link>
+                        ) : (
+                            <span />
+                        )}
+                        {next ? (
+                            <Link href={`/blog/${next.slug}`} rel="next">
+                                {next.title} →
+                            </Link>
+                        ) : (
+                            <span />
+                        )}
+                    </nav>
+                ) : null}
             </main>
         </>
     );
